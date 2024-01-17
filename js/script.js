@@ -5,22 +5,15 @@
 // // myHeaders.append('proxy', 'http://localhost');
 // myHeaders.append('X-MAL-CLIENT-ID','69e86981b1fc774cb0e903636c22bb8e');
 
-const urlOptions = {
-    "headers":{
-        'X-MAL-CLIENT-ID':'69e86981b1fc774cb0e903636c22bb8e',
-    },
-    "mode": 'no-cors'
-    };
 
+function fetchMyAnimeListData(){
+    const url = 'https://api.jikan.moe/v4/anime/';
 
-async function fetchMyAnimeListData(){
-    const url = 'https://api.myanimelist.net/v2/anime/ranking?ranking_type=all'
-
-    const response = await fetch(url, urlOptions);
-    const data = await response.json();
-    
-    // console.log(response);
-    return data;
+  fetch(url)
+     .then(response => response.json())
+     .then(data => console.log(data));
+    // console.log(data.mal_id);
+    // return data;
 }
 
 console.log(fetchMyAnimeListData());
