@@ -1,19 +1,42 @@
+document.addEventListener('DOMContentLoaded', init);
 
 
-// const myHeaders = new Headers();
-// myHeaders.append('mode', 'no-cors');
-// // myHeaders.append('proxy', 'http://localhost');
-// myHeaders.append('X-MAL-CLIENT-ID','69e86981b1fc774cb0e903636c22bb8e');
-
-
-function fetchMyAnimeListData(){
-    const url = 'https://api.jikan.moe/v4/anime/';
-
-  fetch(url)
-     .then(response => response.json())
-     .then(data => console.log(data));
-    // console.log(data.mal_id);
-    // return data;
+const global = {
+  'currentPage': window.location.pathname,
+  'api':{
+    'url': 'https://api.jikan.moe/v4/anime/',
+    'options':{
+      'cors': 'no-cors',
+      'headers':{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        
+      }
+    }
+  }
 }
 
-console.log(fetchMyAnimeListData());
+
+
+
+async function fetchData(endpoint){
+  const URL = global.api.url;
+  const options = global.api.options;
+  
+  let response = await fetch(`${URL}${endpoint}`, options);
+  let data = await response.json()
+  
+  return data;
+}
+
+
+function init(){
+    switch(global.currentPage){
+      case '/':
+      case '/index.html':
+        fetchData();
+        break;
+      default:
+        break;  
+    }
+}
